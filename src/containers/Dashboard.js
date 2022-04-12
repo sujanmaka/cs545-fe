@@ -29,8 +29,7 @@ const Dashboard = () => {
     title: "",
   });
 
-
-
+  const [showPostDetails, setShowPostDetails] = useState(false);
 
   const onChange = (events) => {
     const copy = { ...post };
@@ -39,17 +38,17 @@ const Dashboard = () => {
   };
 
   const changeButtonClicked = () => {
-
     const copy = { ...post };
-    console.log(copy)
+    console.log(copy);
     const copyPosts = [...posts];
     copyPosts[0].title = copy.title;
     setPosts(copyPosts);
   };
 
   const onPostClick = (post) => {
-      setPost(post);
-  }
+    setShowPostDetails(true);
+    setPost(post);
+  };
 
   return (
     <>
@@ -66,9 +65,7 @@ const Dashboard = () => {
         />
       </div>
       <br></br>
-      <div>
-        <PostDetail post={post}/>
-      </div>
+      <div>{showPostDetails ? <PostDetail post={post} /> : null}</div>
     </>
   );
 };
