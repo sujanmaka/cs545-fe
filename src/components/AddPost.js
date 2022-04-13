@@ -6,7 +6,11 @@ const AddPost = (props) => {
     title: "",
     content: "",
     author: "",
-    comments: [],
+    comments: [
+      {
+        name: "",
+      },
+    ],
   });
 
   const onChange = (events) => {
@@ -15,6 +19,14 @@ const AddPost = (props) => {
       [events.target.name]: events.target.value,
     };
     setPostState(updatedPost);
+  };
+
+  const handleCommentNameChange = (idx) => (evt) => {
+    const newComments = postState.comments.map((comment, cidx) => {
+      if (idx !== cidx) return comment;
+      return { ...comment, name: evt.target.value };
+    });
+    setPostState({ comments: newComments });
   };
 
   const addButtonClicked = () => {
@@ -26,10 +38,21 @@ const AddPost = (props) => {
       .catch();
   };
 
+  const handleAddComment = () => {
+    setPostState({
+      comments: postState.comments.concat([{ name: "" }]),
+    });
+  };
+
+  const handleRemoveComment = (idx) => () => {
+    setPostState({
+      comments: postState.comments.filter((s, cidx) => idx !== cidx),
+    });
+  };
+
   return (
     <div className="NewPost">
       <h1> Add Post</h1>
-
       <label>Title</label>
       <input
         type="text"
@@ -44,13 +67,36 @@ const AddPost = (props) => {
         onChange={onChange}
         value={postState.content}
       />
-      <label>Title</label>
+      <label>Author</label>
       <input
         type="text"
         name={"author"}
         onChange={onChange}
         value={postState.author}
       />
+      <label>Comments</label>
+
+      <div>
+        {postState.comments.map((comment, idx) => (
+          <div key={idx} className="shareholder">
+            <input
+              type="text"
+              value={comment.name}
+              onChange={handleCommentNameChange(idx)}
+            />
+            <button
+              type="button"
+              onClick={handleRemoveComment(idx)}
+              className="small"
+            >
+              -
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAddComment} className="small">
+          Add Comment
+        </button>
+      </div>
 
       <button onClick={addButtonClicked}> Add Post</button>
     </div>

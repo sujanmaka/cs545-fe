@@ -23,7 +23,11 @@ const Posts = (props) => {
         key={post.id}
         post={post}
         setSelected={() => {
-          props.setSelected(post.id);
+          if (props.selectedState === post.id) {
+            props.setSelected(0);
+          } else {
+            props.setSelected(post.id);
+          }
         }}
       />
     );
