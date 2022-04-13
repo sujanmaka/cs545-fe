@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PostService from "../service.js/post.service";
+import Comments from "../containers/Comments";
 
 const PostDetail = ({ id, setSelected, changeFetchFlag }) => {
   const [post, setPost] = useState({});
@@ -36,7 +37,9 @@ const PostDetail = ({ id, setSelected, changeFetchFlag }) => {
           <h3>content: {post.content}</h3>
           <div>
             <h3>Comments are: </h3>
-            {/* <Comments comments={post.comments} /> */}
+            {post.comments != null ? (
+              <Comments comments={post.comments} />
+            ) : null}
           </div>
           <br />
           <br />

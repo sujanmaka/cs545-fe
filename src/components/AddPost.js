@@ -26,7 +26,8 @@ const AddPost = (props) => {
       if (idx !== cidx) return comment;
       return { ...comment, name: evt.target.value };
     });
-    setPostState({ comments: newComments });
+
+    setPostState({ ...postState, comments: newComments });
   };
 
   const addButtonClicked = () => {
@@ -40,12 +41,14 @@ const AddPost = (props) => {
 
   const handleAddComment = () => {
     setPostState({
+      ...postState,
       comments: postState.comments.concat([{ name: "" }]),
     });
   };
 
   const handleRemoveComment = (idx) => () => {
     setPostState({
+      ...postState,
       comments: postState.comments.filter((s, cidx) => idx !== cidx),
     });
   };
