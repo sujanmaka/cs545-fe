@@ -3,10 +3,7 @@ import Comment from "../components/Comment";
 
 const Comments = (props) => {
 
-  console.log("props");
-  console.log(props);
-
-  // return <></>;
+  console.log("comments render");
 
   const comments = props.comments.map((comment) => {
     return <Comment key={comment.id} comment={comment} />;

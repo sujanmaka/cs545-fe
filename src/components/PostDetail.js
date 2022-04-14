@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import PostService from "../service.js/post.service";
 import Comments from "../containers/Comments";
 import { AppContext } from "../containers/Dashboard";
@@ -7,6 +7,17 @@ const PostDetail = ({ changeFetchFlag }) => {
   const { selectedState, setSelectedState } = useContext(AppContext);
 
   const [post, setPost] = useState({});
+
+  // const expensiveComputation = (num) => {
+  //   console.log("computation done " + num * 10);
+  //   return num * 10;
+  // };
+
+  // const memoizedValue = useMemo(() => expensiveComputation(selectedState), [selectedState]);
+  // const memoizedFunction = (num) => {
+  //   setSelectedState(num);
+  //   console.log("memoized value " + memoizedValue);
+  // };
 
   useEffect(() => {
     PostService.getPostById(selectedState)
