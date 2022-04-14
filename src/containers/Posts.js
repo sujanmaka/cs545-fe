@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../components/Post";
+import PostDetail from "../components/PostDetail";
 import PostService from "../service.js/post.service";
-import { AppContext } from "./Dashboard";
+import { Link } from "react-router-dom";
 
 const Posts = (props) => {
-  const { selectedState, setSelectedState } = useContext(AppContext);
-
   const [postsState, setPostsState] = useState([]);
 
   useEffect(() => {
     PostService.getPosts().then(
       (response) => {
-        console.log(response.data);
         setPostsState(response.data);
       },
       (error) => {
@@ -22,21 +20,31 @@ const Posts = (props) => {
 
   const posts = postsState.map((post) => {
     return (
-      <Post
-        key={post.id}
-        post={post}
-        setSelected={() => {
-          if (selectedState === post.id) {
-            setSelectedState(0);
-          } else {
-            setSelectedState(post.id);
-          }
-        }}
-      />
+      <Link to={`${post.id}`} key={post.id}>
+        <Post post={post} />
+      </Link>
+
+      // <Post
+      //   key={post.id}
+      //   post={post}
+      //   setSelected={() => {
+      //     if (selectedState === post.id) {
+      //       setSelectedState(0);
+      //     } else {
+      //       setSelectedState(post.id);
+      //     }
+      //   }}
+      // />
     );
   });
 
-  return posts;
+  // return posts;
+  return (
+    <div className="Product">
+      {posts}
+      <PostDetail />
+    </div>
+  );
 };
 
 export default Posts;

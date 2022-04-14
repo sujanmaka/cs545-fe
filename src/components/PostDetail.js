@@ -1,56 +1,40 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostService from "../service.js/post.service";
 import Comments from "../containers/Comments";
-import { AppContext } from "../containers/Dashboard";
+import { useNavigate, useParams } from "react-router-dom";
 
-const PostDetail = ({ changeFetchFlag }) => {
-  const { selectedState, setSelectedState } = useContext(AppContext);
-
+const PostDetail = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState({});
 
-  // const expensiveComputation = (num) => {
-  //   // console.log("computation done " + num * 10);
-  //   console.log("yaha " + num);
-  //   // return num * 10;
-  //   return true;
-  // };
-
-  // const memoizedValue = useMemo(
-  //   () => expensiveComputation(selectedState),
-  //   [selectedState]
-  // );
-  // const memoizedFunction = () => {
-  //   // setSelectedState(num);
-  //   return memoizedValue;
-  // };
-
   useEffect(() => {
-    PostService.getPostById(selectedState)
-      .then((res) => {
-        console.log(selectedState);
-        setPost(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [selectedState]);
+    if (params.id) {
+      PostService.getPostById(params.id)
+        .then((res) => {
+          setPost(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [params.id]);
 
-  const deletePost = () => {
-    PostService.deletePost(selectedState)
+  const deletePost = (id) => {
+    PostService.deletePost(id)
       .then((res) => {
         if (res.status === 204) {
           console.log("Deleted successfully");
-          changeFetchFlag();
-          setSelectedState(0);
+          navigate("/");
         } else Promise.reject();
       })
       .catch((err) => console.log(err));
   };
 
   let postDetail = null;
-  if (selectedState !== 0) {
+  if (params.id) {
     postDetail = (
       <>
         <div className="Box">
-          <h2>id: {post.selectedState}</h2>
+          <h2>id: {post.id}</h2>
           <h3>title: {post.title}</h3>
           <h3>author: {post.author}</h3>
           <h3>content: {post.content}</h3>
@@ -67,7 +51,11 @@ const PostDetail = ({ changeFetchFlag }) => {
             <span className="Left_Padding"></span>
             <a href="/">delete</a>
           </span> */}
-          <button onClick={deletePost} size="sm" variant="danger">
+          <button
+            onClick={() => deletePost(params.id)}
+            size="sm"
+            variant="danger"
+          >
             Delete
           </button>
         </div>

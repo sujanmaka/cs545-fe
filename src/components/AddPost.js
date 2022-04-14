@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostService from "../service.js/post.service";
 
-const AddPost = (props) => {
+const AddPost = () => {
+  const navigate = useNavigate();
   const newPost = useRef();
 
   const [postState, setPostState] = useState({
@@ -14,14 +16,6 @@ const AddPost = (props) => {
       },
     ],
   });
-
-  // const onChange = (events) => {
-  //   const updatedPost = {
-  //     ...postState,
-  //     [events.target.name]: events.target.value,
-  //   };
-  //   setPostState(updatedPost);
-  // };
 
   const handleCommentNameChange = (idx) => (evt) => {
     const newComments = postState.comments.map((comment, cidx) => {
@@ -38,14 +32,14 @@ const AddPost = (props) => {
       title: form["title"].value,
       content: form["content"].value,
       author: form["author"].value,
-      comments: postState.comments
+      comments: postState.comments,
     };
-
 
     PostService.createPost(post)
       .then((response) => {
+        console.log("Post added successfully");
         setPostState({ title: "", content: "", author: "", comments: [] });
-        props.changeFetchFlag();
+        navigate("/posts");
       })
       .catch();
   };
