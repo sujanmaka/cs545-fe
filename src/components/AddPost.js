@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import PostService from "../service.js/post.service";
 
 const AddPost = (props) => {

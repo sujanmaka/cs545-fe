@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Post from "../components/Post";
 import PostService from "../service.js/post.service";
+import { AppContext } from "./Dashboard";
 
 const Posts = (props) => {
+  const { selectedState, setSelectedState } = useContext(AppContext);
+
   const [postsState, setPostsState] = useState([]);
 
   useEffect(() => {
@@ -23,10 +26,10 @@ const Posts = (props) => {
         key={post.id}
         post={post}
         setSelected={() => {
-          if (props.selectedState === post.id) {
-            props.setSelected(0);
+          if (selectedState === post.id) {
+            setSelectedState(0);
           } else {
-            props.setSelected(post.id);
+            setSelectedState(post.id);
           }
         }}
       />

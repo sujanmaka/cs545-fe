@@ -1,37 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PostService from "../service.js/post.service";
 import Comments from "../containers/Comments";
+import { AppContext } from "../containers/Dashboard";
 
-const PostDetail = ({ id, setSelected, changeFetchFlag }) => {
+const PostDetail = ({ changeFetchFlag }) => {
+  const { selectedState, setSelectedState } = useContext(AppContext);
+
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    PostService.getPostById(id)
+    PostService.getPostById(selectedState)
       .then((res) => {
-        console.log(id);
+        console.log(selectedState);
         setPost(res.data);
       })
       .catch((err) => console.log(err));
-  }, [id]);
+  }, [selectedState]);
 
   const deletePost = () => {
-    PostService.deletePost(post.id)
+    PostService.deletePost(selectedState)
       .then((res) => {
         if (res.status === 204) {
           console.log("Deleted successfully");
           changeFetchFlag();
-          setSelected(0);
+          setSelectedState(0);
         } else Promise.reject();
       })
       .catch((err) => console.log(err));
   };
 
   let postDetail = null;
-  if (id !== 0) {
+  if (selectedState !== 0) {
     postDetail = (
       <>
         <div className="Box">
-          <h2>id: {post.id}</h2>
+          <h2>id: {post.selectedState}</h2>
           <h3>title: {post.title}</h3>
           <h3>author: {post.author}</h3>
           <h3>content: {post.content}</h3>
