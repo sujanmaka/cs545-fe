@@ -9,14 +9,19 @@ const PostDetail = ({ changeFetchFlag }) => {
   const [post, setPost] = useState({});
 
   // const expensiveComputation = (num) => {
-  //   console.log("computation done " + num * 10);
-  //   return num * 10;
+  //   // console.log("computation done " + num * 10);
+  //   console.log("yaha " + num);
+  //   // return num * 10;
+  //   return true;
   // };
 
-  // const memoizedValue = useMemo(() => expensiveComputation(selectedState), [selectedState]);
-  // const memoizedFunction = (num) => {
-  //   setSelectedState(num);
-  //   console.log("memoized value " + memoizedValue);
+  // const memoizedValue = useMemo(
+  //   () => expensiveComputation(selectedState),
+  //   [selectedState]
+  // );
+  // const memoizedFunction = () => {
+  //   // setSelectedState(num);
+  //   return memoizedValue;
   // };
 
   useEffect(() => {
