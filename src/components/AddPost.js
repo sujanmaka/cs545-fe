@@ -38,9 +38,9 @@ const AddPost = (props) => {
       title: form["title"].value,
       content: form["content"].value,
       author: form["author"].value,
+      comments: postState.comments
     };
 
-    console.log(post.title);
 
     PostService.createPost(post)
       .then((response) => {
@@ -89,15 +89,15 @@ const AddPost = (props) => {
           // onChange={onChange}
           // value={postState.author}
         />
-        {/* <label>Comments</label> */}
+        <label>Comments</label>
 
-        {/* <div>
+        <div>
           {postState.comments.map((comment, idx) => (
             <div key={idx} className="shareholder">
               <input
                 type="text"
-                // value={comment.name}
-                // onChange={handleCommentNameChange(idx)}
+                value={comment.name}
+                onChange={handleCommentNameChange(idx)}
               />
               <button
                 type="button"
@@ -111,7 +111,7 @@ const AddPost = (props) => {
           <button type="button" onClick={handleAddComment} className="small">
             Add Comment
           </button>
-        </div> */}
+        </div>
       </form>
       <button onClick={addButtonClicked}> Add Post</button>
     </div>
