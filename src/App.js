@@ -4,6 +4,7 @@ import "./App.css";
 import Dashboard from "./containers/Dashboard";
 import AuthService from "./service.js/auth.service";
 import EventBus from "./common/EventBus";
+import Login from "./components/Login";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -29,15 +30,19 @@ function App() {
     setCurrentUser(undefined);
   };
 
-  return { currentUser } ? (
+  return (
     <BrowserRouter>
-      <Dashboard />
-      <Link to="/login" onClick={logOut}>
-        Logout
-      </Link>
+      {currentUser ? (
+        <>
+          <Dashboard />
+          <Link to="/login" onClick={logOut}>
+            Logout
+          </Link>
+        </>
+      ) : (
+        <Login />
+      )}
     </BrowserRouter>
-  ) : (
-    <Link to="/login"> Login</Link>
   );
 }
 

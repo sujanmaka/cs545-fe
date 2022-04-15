@@ -17,6 +17,9 @@ const required = (value) => {
 };
 
 const Login = () => {
+
+  console.log("click is here");
+
   let navigate = useNavigate();
 
   const form = useRef();
